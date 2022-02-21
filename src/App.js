@@ -1,23 +1,21 @@
-import logo from './logo.svg';
+import ListOfTodos from './components/ListOfTodos';
+import TodoInputField from './components/TodoInputField';
 import './App.css';
+import { createContext } from 'react';
+import useLocalStorage from './hooks/useLocalStorage';
+
+export const TodoContext = createContext();
 
 function App() {
+  const [todos, setTodos] = useLocalStorage('todos', []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <TodoContext.Provider value={[todos, setTodos]}>
+        <h1>Simple Todo App</h1>
+        <ListOfTodos />
+        <TodoInputField />
+      </TodoContext.Provider>
     </div>
   );
 }
